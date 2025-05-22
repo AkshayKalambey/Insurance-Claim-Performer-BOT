@@ -5,8 +5,6 @@
     <x:Property Name="out_strConsultationCapValue" Type="OutArgument(x:String)" />
     <x:Property Name="out_strMedicineCapValue" Type="OutArgument(x:String)" />
     <x:Property Name="out_strSurgeryCapValue" Type="OutArgument(x:String)" />
-    <x:Property Name="out_strICUCapValue" Type="OutArgument(x:String)" />
-    <x:Property Name="out_strRoomRentCapValue" Type="OutArgument(x:String)" />
     <x:Property Name="in_dtInputTable" Type="InArgument(sd:DataTable)" />
   </x:Members>
   <VisualBasic.Settings>
@@ -99,6 +97,7 @@
   </TextExpression.ReferencesForImplementation>
   <Flowchart DisplayName="Insurance_Claim_Performer_AmountCapping" sap:VirtualizedContainerService.HintSize="1020.8000000000001,622.4" sap2010:WorkflowViewState.IdRef="Flowchart_1">
     <Flowchart.Variables>
+      <Variable x:TypeArguments="x:String" Name="strSurgery" />
       <Variable x:TypeArguments="x:String" Name="strMedicineCharges" />
       <Variable x:TypeArguments="x:String" Name="strConsultation" />
       <Variable x:TypeArguments="x:String" Name="strICUDays" />
@@ -140,19 +139,19 @@
               <av:Size x:Key="ShapeSize">110.4,70.4</av:Size>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[in_dtInputTable]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="537.6,1761.6" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+          <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[in_dtInputTable]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="513.6,914.4" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
             <ui:ForEachRow.Body>
               <ActivityAction x:TypeArguments="sd:DataRow">
                 <ActivityAction.Argument>
                   <DelegateInArgument x:TypeArguments="sd:DataRow" Name="CurrentRow" />
                 </ActivityAction.Argument>
-                <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="536,1612" sap2010:WorkflowViewState.IdRef="Sequence_1">
+                <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="512,764.8" sap2010:WorkflowViewState.IdRef="Sequence_1">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <ui:MultipleAssign DisplayName="Assigning All Prices" sap:VirtualizedContainerService.HintSize="502.4,304.8" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+                  <ui:MultipleAssign DisplayName="Assigning All Prices" sap:VirtualizedContainerService.HintSize="478.4,336.8" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
                     <ui:MultipleAssign.AssignOperations>
                       <scg:List x:TypeArguments="ui:AssignOperation" Capacity="8">
                         <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
@@ -161,6 +160,14 @@
                           </ui:AssignOperation.To>
                           <ui:AssignOperation.Value>
                             <InArgument x:TypeArguments="x:String">[CurrentRow("Room Rent (per day)").ToString]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_9">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:String">[strSurgery]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:String">[CurrentRow("Surgery").ToString]</InArgument>
                           </ui:AssignOperation.Value>
                         </ui:AssignOperation>
                         <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
@@ -212,7 +219,7 @@
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
                   </ui:MultipleAssign>
-                  <ui:MultipleAssign DisplayName="Assigning Per Day Rent" sap:VirtualizedContainerService.HintSize="502.4,180" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
+                  <ui:MultipleAssign DisplayName="Assigning Per Day Rent" sap:VirtualizedContainerService.HintSize="478.4,180" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
                     <ui:MultipleAssign.AssignOperations>
                       <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
                         <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_7">
@@ -240,16 +247,16 @@
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
                   </ui:MultipleAssign>
-                  <Sequence DisplayName="Final Capped Amounts" sap:VirtualizedContainerService.HintSize="502.4,1067.2" sap2010:WorkflowViewState.IdRef="Sequence_2">
+                  <Sequence DisplayName="Final Capped Amounts" sap:VirtualizedContainerService.HintSize="478.4,188" sap2010:WorkflowViewState.IdRef="Sequence_2">
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
-                    <If Condition="[out_intRoomeRentTotalCapValue&gt;5000]" DisplayName="Capping Room Rent" sap:VirtualizedContainerService.HintSize="468.8,468" sap2010:WorkflowViewState.IdRef="If_1">
+                    <If Condition="[out_intRoomeRentTotalCapValue&gt;5000]" DisplayName="Capping Room Rent" sap:VirtualizedContainerService.HintSize="416,56.8" sap2010:WorkflowViewState.IdRef="If_1">
                       <sap:WorkflowViewStateService.ViewState>
                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
                           <x:Boolean x:Key="IsPinned">False</x:Boolean>
                         </scg:Dictionary>
                       </sap:WorkflowViewStateService.ViewState>
@@ -262,10 +269,10 @@
                           </sap:WorkflowViewStateService.ViewState>
                           <Assign sap:VirtualizedContainerService.HintSize="433.6,104.8" sap2010:WorkflowViewState.IdRef="Assign_1">
                             <Assign.To>
-                              <OutArgument x:TypeArguments="x:String">[out_strRoomRentCapValue]</OutArgument>
+                              <OutArgument x:TypeArguments="x:Int32">[out_intRoomeRentTotalCapValue]</OutArgument>
                             </Assign.To>
                             <Assign.Value>
-                              <InArgument x:TypeArguments="x:String">5000</InArgument>
+                              <InArgument x:TypeArguments="x:Int32">5000</InArgument>
                             </Assign.Value>
                           </Assign>
                         </Sequence>
@@ -279,16 +286,16 @@
                           </sap:WorkflowViewStateService.ViewState>
                           <Assign sap:VirtualizedContainerService.HintSize="433.6,104.8" sap2010:WorkflowViewState.IdRef="Assign_2">
                             <Assign.To>
-                              <OutArgument x:TypeArguments="x:String">[out_strRoomRentCapValue]</OutArgument>
+                              <OutArgument x:TypeArguments="x:Int32">[out_intRoomeRentTotalCapValue]</OutArgument>
                             </Assign.To>
                             <Assign.Value>
-                              <InArgument x:TypeArguments="x:String">[out_strRoomRentCapValue]</InArgument>
+                              <InArgument x:TypeArguments="x:Int32">[out_intRoomeRentTotalCapValue]</InArgument>
                             </Assign.Value>
                           </Assign>
                         </Sequence>
                       </If.Else>
                     </If>
-                    <If Condition="[out_intRoomeRentTotalCapValue&gt;10000]" DisplayName="Capping ICU Charges" sap:VirtualizedContainerService.HintSize="468.8,56.8" sap2010:WorkflowViewState.IdRef="If_2">
+                    <If Condition="[out_intICUTotalCapValue&gt;10000]" DisplayName="Capping ICU Charges" sap:VirtualizedContainerService.HintSize="416,48" sap2010:WorkflowViewState.IdRef="If_2">
                       <sap:WorkflowViewStateService.ViewState>
                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -304,7 +311,7 @@
                           </sap:WorkflowViewStateService.ViewState>
                           <Assign sap:VirtualizedContainerService.HintSize="433.6,104.8" sap2010:WorkflowViewState.IdRef="Assign_3">
                             <Assign.To>
-                              <OutArgument x:TypeArguments="x:Int32">[out_intRoomeRentTotalCapValue]</OutArgument>
+                              <OutArgument x:TypeArguments="x:Int32">[out_intICUTotalCapValue]</OutArgument>
                             </Assign.To>
                             <Assign.Value>
                               <InArgument x:TypeArguments="x:Int32">10000</InArgument>
@@ -320,48 +327,6 @@
                             </scg:Dictionary>
                           </sap:WorkflowViewStateService.ViewState>
                           <Assign sap:VirtualizedContainerService.HintSize="433.6,104.8" sap2010:WorkflowViewState.IdRef="Assign_4">
-                            <Assign.To>
-                              <OutArgument x:TypeArguments="x:Int32">[out_intICUTotalCapValue]</OutArgument>
-                            </Assign.To>
-                            <Assign.Value>
-                              <InArgument x:TypeArguments="x:Int32">[out_intICUTotalCapValue]</InArgument>
-                            </Assign.Value>
-                          </Assign>
-                        </Sequence>
-                      </If.Else>
-                    </If>
-                    <If Condition="[out_intRoomeRentTotalCapValue&gt;10000]" DisplayName="Capping Surgery Charges" sap:VirtualizedContainerService.HintSize="468.8,459.2" sap2010:WorkflowViewState.IdRef="If_3">
-                      <sap:WorkflowViewStateService.ViewState>
-                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                        </scg:Dictionary>
-                      </sap:WorkflowViewStateService.ViewState>
-                      <If.Then>
-                        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="467.2,164.8" sap2010:WorkflowViewState.IdRef="Sequence_7">
-                          <sap:WorkflowViewStateService.ViewState>
-                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                            </scg:Dictionary>
-                          </sap:WorkflowViewStateService.ViewState>
-                          <Assign sap:VirtualizedContainerService.HintSize="433.6,104.8" sap2010:WorkflowViewState.IdRef="Assign_5">
-                            <Assign.To>
-                              <OutArgument x:TypeArguments="x:Int32">[out_intRoomeRentTotalCapValue]</OutArgument>
-                            </Assign.To>
-                            <Assign.Value>
-                              <InArgument x:TypeArguments="x:Int32">10000</InArgument>
-                            </Assign.Value>
-                          </Assign>
-                        </Sequence>
-                      </If.Then>
-                      <If.Else>
-                        <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="467.2,164.8" sap2010:WorkflowViewState.IdRef="Sequence_8">
-                          <sap:WorkflowViewStateService.ViewState>
-                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                            </scg:Dictionary>
-                          </sap:WorkflowViewStateService.ViewState>
-                          <Assign sap:VirtualizedContainerService.HintSize="433.6,104.8" sap2010:WorkflowViewState.IdRef="Assign_6">
                             <Assign.To>
                               <OutArgument x:TypeArguments="x:Int32">[out_intICUTotalCapValue]</OutArgument>
                             </Assign.To>
