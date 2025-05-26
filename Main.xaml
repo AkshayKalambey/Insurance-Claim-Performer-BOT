@@ -273,7 +273,7 @@
                       </Assign>
                       <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Process workflow" sap:VirtualizedContainerService.HintSize="451.2,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_24" UnSafe="False" WorkflowFileName="Framework\Process.xaml">
                         <ui:InvokeWorkflowFile.Arguments>
-                          <InArgument x:TypeArguments="sd:DataTable" x:Key="in_DTManualReview">[DT_ManualCheck]</InArgument>
+                          <InOutArgument x:TypeArguments="sd:DataTable" x:Key="io_DTManualReview">[DT_ManualCheck]</InOutArgument>
                           <InArgument x:TypeArguments="sd:DataTable" x:Key="in_dtCappingDataTable">[Dt_CappingPrices]</InArgument>
                           <InArgument x:TypeArguments="ui:QueueItem" x:Key="in_TransactionItem">[TransactionItem]</InArgument>
                           <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[Config]</InArgument>

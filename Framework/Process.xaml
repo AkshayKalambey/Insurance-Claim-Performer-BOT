@@ -1,6 +1,6 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="Process" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="in_DTManualReview" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="io_DTManualReview" Type="InOutArgument(sd:DataTable)" />
     <x:Property Name="in_dtCappingDataTable" Type="InArgument(sd:DataTable)" />
     <x:Property sap2010:Annotation.AnnotationText="Transaction item to be processed." Name="in_TransactionItem" Type="InArgument(ui:QueueItem)" />
     <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
@@ -146,7 +146,7 @@
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{in_TransactionItem.SpecificContent(&quot;Claim ID&quot;).ToString,in_TransactionItem.SpecificContent(&quot;Policy Number&quot;).ToString,in_TransactionItem.SpecificContent(&quot;Policy Holder Name&quot;).ToString,in_TransactionItem.SpecificContent(&quot;Treatment Cost&quot;).ToString,&quot;Claim Amount Exceeded&quot;}]" DataTable="[in_DTManualReview]" DisplayName="Add Data Row" sap:VirtualizedContainerService.HintSize="382.4,211.2" sap2010:WorkflowViewState.IdRef="AddDataRow_1" />
+            <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{in_TransactionItem.SpecificContent(&quot;Claim ID&quot;).ToString,in_TransactionItem.SpecificContent(&quot;Policy Number&quot;).ToString,in_TransactionItem.SpecificContent(&quot;Policy Holder Name&quot;).ToString,in_TransactionItem.SpecificContent(&quot;Treatment Cost&quot;).ToString,&quot;Claim Amount Exceeded&quot;}]" DataTable="[io_DTManualReview]" DisplayName="Add Data Row" sap:VirtualizedContainerService.HintSize="382.4,211.2" sap2010:WorkflowViewState.IdRef="AddDataRow_1" />
           </Sequence>
         </If.Then>
         <If.Else>
