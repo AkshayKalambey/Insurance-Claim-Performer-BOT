@@ -132,13 +132,9 @@
           <InArgument x:TypeArguments="ui:QueueItem" x:Key="in_CapTransactionItem">[in_TransactionItem]</InArgument>
           <OutArgument x:TypeArguments="x:Int32" x:Key="out_intICUTotalCapValue">[intICUTotalCapValue]</OutArgument>
           <OutArgument x:TypeArguments="x:Int32" x:Key="out_intRoomeRentTotalCapValue">[intRoomeRentTotalCapValue]</OutArgument>
-          <OutArgument x:TypeArguments="x:String" x:Key="out_strConsultationCapValue">[strConsultationCapValue]</OutArgument>
-          <OutArgument x:TypeArguments="x:String" x:Key="out_strMedicineCapValue">[strMedicineCapValue]</OutArgument>
-          <OutArgument x:TypeArguments="x:String" x:Key="out_strSurgeryCapValue">[strSurgeryCapValue]</OutArgument>
           <InArgument x:TypeArguments="sd:DataTable" x:Key="in_dtInputTable">[in_dtCappingDataTable]</InArgument>
           <OutArgument x:TypeArguments="x:String" x:Key="out_strConsultation">[strConsultation]</OutArgument>
           <OutArgument x:TypeArguments="x:String" x:Key="out_strMedicineCharges">[strMedicineCharges]</OutArgument>
-          <OutArgument x:TypeArguments="x:String" x:Key="out_strSurgery">[strSurgery]</OutArgument>
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
     </Sequence>
