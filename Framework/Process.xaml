@@ -1,5 +1,6 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="Process" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
+    <x:Property Name="io_DTSuccess" Type="InOutArgument(sd:DataTable)" />
     <x:Property Name="io_DTManualReview" Type="InOutArgument(sd:DataTable)" />
     <x:Property Name="in_dtCappingDataTable" Type="InArgument(sd:DataTable)" />
     <x:Property sap2010:Annotation.AnnotationText="Transaction item to be processed." Name="in_TransactionItem" Type="InArgument(ui:QueueItem)" />
@@ -104,7 +105,7 @@
       <AssemblyReference>System.Data.Common</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Invoke major steps of the business process, which are usually implemented by multiple subworkflows.&#xA;&#xA;If a BusinessRuleException is thrown, the transaction is skipped. &#xA;If another kind of exception occurs, the current transaction can be retried. " DisplayName="Process" sap:VirtualizedContainerService.HintSize="1014.8000000000001,1111.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Invoke major steps of the business process, which are usually implemented by multiple subworkflows.&#xA;&#xA;If a BusinessRuleException is thrown, the transaction is skipped. &#xA;If another kind of exception occurs, the current transaction can be retried. " DisplayName="Process" sap:VirtualizedContainerService.HintSize="1014.8000000000001,1467.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:Int32" Name="intICUTotalCapValue" />
       <Variable x:TypeArguments="x:Int32" Name="intRoomeRentTotalCapValue" />
@@ -132,13 +133,13 @@
         <OutArgument x:TypeArguments="x:String" x:Key="out_strMedicineCharges">[strMedicineCharges]</OutArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <Sequence DisplayName="Validating for Total Claim Amount" sap:VirtualizedContainerService.HintSize="451.2,582.4" sap2010:WorkflowViewState.IdRef="Sequence_2">
+    <Sequence DisplayName="Validating for Total Claim Amount" sap:VirtualizedContainerService.HintSize="451.2,938.4" sap2010:WorkflowViewState.IdRef="Sequence_2">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <If Condition="[Cint(in_TransactionItem.SpecificContent(&quot;Treatment Cost&quot;)) &gt; 150000]" sap:VirtualizedContainerService.HintSize="417.6,490.4" sap2010:WorkflowViewState.IdRef="If_1">
+      <If Condition="[Cint(in_TransactionItem.SpecificContent(&quot;Treatment Cost&quot;)) &gt; 150000]" sap:VirtualizedContainerService.HintSize="417.6,846.4" sap2010:WorkflowViewState.IdRef="If_1">
         <If.Then>
           <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,271.2" sap2010:WorkflowViewState.IdRef="Sequence_3">
             <sap:WorkflowViewStateService.ViewState>
@@ -146,16 +147,18 @@
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{in_TransactionItem.SpecificContent(&quot;Claim ID&quot;).ToString,in_TransactionItem.SpecificContent(&quot;Policy Number&quot;).ToString,in_TransactionItem.SpecificContent(&quot;Policy Holder Name&quot;).ToString,in_TransactionItem.SpecificContent(&quot;Treatment Cost&quot;).ToString,&quot;Claim Amount Exceeded&quot;}]" DataTable="[io_DTManualReview]" DisplayName="Add Data Row" sap:VirtualizedContainerService.HintSize="382.4,211.2" sap2010:WorkflowViewState.IdRef="AddDataRow_1" />
+            <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{in_TransactionItem.SpecificContent(&quot;Claim ID&quot;).ToString,in_TransactionItem.SpecificContent(&quot;Policy Number&quot;).ToString,in_TransactionItem.SpecificContent(&quot;Policy Holder Name&quot;).ToString,in_TransactionItem.SpecificContent(&quot;Treatment Cost&quot;).ToString,&quot;Claim Amount Exceeded&quot;}]" DataTable="[io_DTManualReview]" DisplayName="Add Data Row Manual" sap:VirtualizedContainerService.HintSize="382.4,211.2" sap2010:WorkflowViewState.IdRef="AddDataRow_1" />
           </Sequence>
         </If.Then>
         <If.Else>
-          <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,89.6" sap2010:WorkflowViewState.IdRef="Sequence_4">
+          <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,445.6" sap2010:WorkflowViewState.IdRef="Sequence_4">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
+            <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{in_TransactionItem.SpecificContent(&quot;Claim ID&quot;).ToString,in_TransactionItem.SpecificContent(&quot;Policy Number&quot;).ToString,in_TransactionItem.SpecificContent(&quot;Policy Holder Name&quot;).ToString,in_TransactionItem.SpecificContent(&quot;Treatment Cost&quot;).ToString}]" DataTable="[io_DTSuccess]" DisplayName="Add Data Row Success" sap:VirtualizedContainerService.HintSize="382.4,220" sap2010:WorkflowViewState.IdRef="AddDataRow_2" />
+            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="382.4,165.6" sap2010:WorkflowViewState.IdRef="LogMessage_2" Message="[&quot;Claim Approved for &quot;+in_TransactionItem.SpecificContent(&quot;Claim ID&quot;).ToString+&quot; and Policy Number:- &quot;+in_TransactionItem.SpecificContent(&quot;Policy Number&quot;).ToString]" />
           </Sequence>
         </If.Else>
       </If>
